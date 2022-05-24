@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { arrowDownIcon } from '../../../../../assets';
+import calc from '../../../../../services/calc';
 
 import {
   Calc,
@@ -206,7 +207,8 @@ function CalcContent() {
               </WrapperCheckbox>
               <PlanButton>
                 <Button
-                onClick={()=>setDropdownPlan(false)}
+                onClick={()=>calc()}
+                // onClick={()=>setDropdownPlan(false)}
                 >Aplicar</Button>
               </PlanButton>
             </DropdownPlan>

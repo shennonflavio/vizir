@@ -67,6 +67,7 @@ export const Logo = styled.div`
   align-items: center;
   justify-content: center;
   padding-right: 20%;
+  cursor: pointer;
 
   @media (max-width: 600px) {
     padding-right: 32px;

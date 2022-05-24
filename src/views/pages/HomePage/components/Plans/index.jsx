@@ -1,10 +1,11 @@
+import { func } from 'prop-types';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { checkIcon} from '../../../../../assets';
 import { planData } from './planData';
 import { BoxPlans, Container, ContractButton, PlanSubtitle, PlanTitle, WrapperPlans, WrapperPlanTitles } from './styles';
 
-function Plans() {
+function Plans({scrollCalc}) {
 
   const navigate = useNavigate()
 
@@ -34,10 +35,16 @@ function Plans() {
             <li> <img src={checkIcon} alt="" /> {items.subtitle}</li>
             <li> <img src={checkIcon} alt="" /> {items.subtitle}</li>
           </ul>
-          <ContractButton onClick={()=> navigate('/contract')} type='button'>{items.plan === 'Personalizado' ?  'Customizar': 'Contratar' }</ContractButton>
+          <ContractButton
+          onClick={items.plan === 'Personalizado' ?  ()=> scrollCalc() : ()=> navigate('/contract')}
+          type='button'>{items.plan === 'Personalizado' ?  'Customizar': 'Contratar' }</ContractButton>
        </BoxPlans>))}
       </WrapperPlans>
     </Container>);
 }
 
 export default Plans;
+
+Plans.propTypes={
+  scrollCalc: func.isRequired
+}

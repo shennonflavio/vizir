@@ -48,7 +48,7 @@ function FinishContract() {
             <img src={arrowBackIcon} alt="seta para voltar" />
             <span>Voltar para página inicial</span>
             </LinkBack>
-            <Logo >
+            <Logo onClick={()=>navigate('/')}>
               <img src={logTelzir} alt="Logo" />
             </Logo>
           </Header>

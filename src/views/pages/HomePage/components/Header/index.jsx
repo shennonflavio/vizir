@@ -1,8 +1,8 @@
+import { func } from 'prop-types';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { bannerPhone, logoIcon, mainBanner } from '../../../../../assets';
 import useWindowDimensions from '../../../../../Hooks/useWindowDimensions';
-import MainContent from '../MainContent';
 import {
   Button,
   CollapseToggle,
@@ -19,7 +19,7 @@ import {
   WrapperMainTitle,
 } from './styles';
 
-function Header() {
+function Header({scroll, scrollCalc, scrollPlans}) {
   const navigate = useNavigate();
   const { isMobile } = useWindowDimensions();
   const [menuDrawer, setMenuDrawer] = useState(false);
@@ -32,6 +32,16 @@ function Header() {
 
   function handleContractPage() {
     navigate('/contract');
+  }
+
+  function handleVantageButton() {
+    scroll();
+   animate();
+  }
+
+  function handleCalcButton() {
+    scrollCalc();
+    animate();
   }
 
 
@@ -53,20 +63,18 @@ function Header() {
           </Divider>
           {!isMobile &&(
             <DividerButton>
-              <Button onClick={()=>navigate(<MainContent/>)} type='button'>Vantagens</Button>
-              <Button type='button'>Cálculo</Button>
+              <Button onClick={()=>scroll()} type='button'>Vantagens</Button>
+              <Button onClick={()=>scrollCalc()} type='button'>Cálculo</Button>
               <ContractButton onClick={()=> handleContractPage()} type='button'>Contratar</ContractButton>
             </DividerButton>
           )}
 
           {isMobile && (
-
             <CollapseToggle  onClick={() => animate() } >
               <span className={animateMenu ? 'one' : null}/>
               <span className={animateMenu ? 'two' : null}/>
               <span className={animateMenu ? 'three' : null}/>
             </CollapseToggle>
-
           )}
           {isMobile &&
           <MenuDrawer
@@ -75,9 +83,9 @@ function Header() {
             <DividerButton
             mobileVisible={!menuDrawer ? 'hidden' : 'visible' }
             isMobile>
-              <Button type='button'>Vantagens</Button>
-              <Button type='button'>Cálculo</Button>
-              <ContractButton type='button'>Contratar</ContractButton>
+              <Button onClick={()=>handleVantageButton()} type='button'>Vantagens</Button>
+              <Button onClick={()=>handleCalcButton()} type='button'>Cálculo</Button>
+              <ContractButton onClick={()=> handleContractPage()} type='button'>Contratar</ContractButton>
             </DividerButton>
             </MenuDrawer>}
         </Navbar>
@@ -90,7 +98,7 @@ function Header() {
             Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </Subtitle>
-          <button type='button'>Saiba mais</button>
+          <button onClick={()=>scrollPlans()} type='button'>Saiba mais</button>
         </WrapperMainTitle>
         </Opacity>
       </ContainerHeader>
@@ -99,3 +107,10 @@ function Header() {
 }
 
 export default Header;
+
+
+Header.propTypes={
+  scroll: func.isRequired,
+  scrollCalc: func.isRequired,
+  scrollPlans: func.isRequired
+}

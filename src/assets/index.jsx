@@ -15,7 +15,8 @@ import arrowBackIcon from './icons/purpleArrowBack.svg';
 import cardsIcon from './icons/cards.svg';
 import cvcardIcon from './icons/cvcard.svg';
 import emojiIcon from './icons/Emoji.svg';
-import bannerPhone from './icons/bannerPhone.svg'
+import bannerPhone from './icons/bannerPhone.svg';
+import toTopIcon from './icons/topIcon.svg';
 
 export {
     mainBanner,
@@ -35,6 +36,7 @@ export {
     cardsIcon,
     cvcardIcon,
     emojiIcon,
-    bannerPhone
+    bannerPhone,
+    toTopIcon
 
 }
