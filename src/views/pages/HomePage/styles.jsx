@@ -25,7 +25,7 @@ export const ButtonToTop = styled.button`
   border-radius: 50px;
   border: none;
   background-color: transparent;
-  display: ${({visible})=> visible};
+  display: ${({view})=> view};
   justify-content: center;
   align-items: center;
 

@@ -1,6 +1,9 @@
 
-export default function calc() {
-   const teste = 2 + 2;
-   console.log(teste)
+export default function calc(o,d,t,p ) {
+
+   console.log(o)
+   console.log(d)
+   console.log(t)
+   console.log(p)
 }
 

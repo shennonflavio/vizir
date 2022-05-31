@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {  useNavigate } from 'react-router-dom';
 import arrowBackIcon from '../../../assets/icons/purpleArrowBack.svg';
 import cardsIcon from '../../../assets/icons/cards.svg';
@@ -33,13 +33,53 @@ import {
   WrapperValidateAndCv
 } from './styles';
 import logTelzir from '../../../assets/icons/logTelzir.svg';
-import useWindowDimensions from '../../../Hooks/useWindowDimensions';
+import { fetchCitiesForStates, fetchStates } from '../../../services/getCityandStates';
 
 function FinishContract() {
 
   const navigate = useNavigate();
 
-  const {isMobile} = useWindowDimensions();
+  const [cities, setCities]=useState([]);
+  const [states, setState]=useState([]);
+  const [formValues, setFormValues] = useState({});
+
+
+  const  handleInputChange=(e) =>{
+    e.preventDefault()
+    const {value, name} = e.nativeEvent.target;
+    setFormValues({...formValues,[name]:value});
+  }
+   function checkCEP(e) {
+  const cep = e.nativeEvent.target.value.replace(/\D/g,'');
+  fetch(`https://viacep.com.br/ws/${cep}/json`)
+  .then(res => res.json()).then(data =>{
+    setFormValues({
+      cep:data.cep,
+      name:'',
+      lastName:'',
+      phone:'',
+      email:'',
+      number: '',
+      complement: data.complemento,
+      address: data.logradouro,
+      city: data.localidade,
+      state: data.uf
+    })
+  })
+}
+
+  useEffect(()=>{
+    fetchStates().then((state)=>{
+      setState(state);
+    }) },[]);
+
+  useEffect(()=>{
+    fetchCitiesForStates(formValues.state).then((cities)=>{
+      setCities(cities);
+    })
+  },[formValues.state]);
+
+
 
     return (
         <Container>
@@ -59,21 +99,41 @@ function FinishContract() {
               <Box>
                 <div>
                 <span>Nome</span>
-                <input type="text" />
+                <input
+                type="text"
+                name='name'
+                value={formValues.name}
+                onChange={handleInputChange}
+                />
                 </div>
                  <div>
                 <span>Telefone</span>
-                <input type="text" />
+                <input
+                type="text"
+                name='phone'
+                value={formValues.phone}
+                onChange={handleInputChange}
+                />
                 </div>
               </Box>
               <Box>
                 <div>
                 <span>Sobrenome</span>
-                <input type="text" />
+                <input
+                type="text"
+                name='lastName'
+                value={formValues.lastName}
+                onChange={handleInputChange}
+                />
                 </div>
                  <div>
                 <span>E-mail</span>
-                <input type="text" />
+                <input
+                type="text"
+                name='email'
+                value={formValues.email}
+                onChange={handleInputChange}
+                />
                 </div>
               </Box>
             </PersonalDataForm>
@@ -86,35 +146,65 @@ function FinishContract() {
               <WrapperCep>
                 <div>
                   <span>CEP</span>
-                  <input type="text" />
+                  <input
+                  type="text"
+                  name='cep'
+                  value={formValues.cep}
+                  onChange={handleInputChange}
+                  onBlur={checkCEP}
+                  />
                 </div>
                 <a target="_blank" href= "https://buscacepinter.correios.com.br/app/endereco/index.php" rel="noreferrer" >Não sei meu cep</a>
               </WrapperCep>
               <WrapperComplement>
                 <div>
                   <span>Número</span>
-                  <input type="text" />
+                  <input
+                  type="text"
+                  name='number'
+                  value={formValues.number}
+                  onChange={handleInputChange} />
                 </div>
                 <div>
                    <span>Complemento</span>
-                   <input type="text" />
+                   <input
+                   type="text"
+                   name='complement'
+                   value={formValues.complement}
+                   onChange={handleInputChange}
+                   />
                 </div>
               </WrapperComplement>
 
             </AddressBox>
             <AddressBox width='456px'>
                 <span>Endereço</span>
-                <input type="text" />
+                <input
+                type="text"
+                value={formValues.address}
+                name='address'
+                onChange={handleInputChange}
+                />
               <WrapperCityandState>
                 <City width='308px'>
                   <span>Cidade</span>
-                  <select name="cidade" id="cidade" >
-                    <option value="">Cidade</option>
+                  <select name="city" id="cidade" onChange={handleInputChange}>
+                    <option value="">Selecione uma cidade...</option>
+                    {cities.map((city, index)=>{
+                      const {id,nome}= city;
+                      return(<option key={index} value={id}>{nome}</option>)
+                    })}
                   </select>
                 </City>
                 <State width='59px'>
                   <span>Estado</span>
-                  <select name="estado" id="estado" >estado</select>
+                  <select name="state" id="estado" onChange={handleInputChange} >
+                    <option>...</option>
+                    {states.map((state, index)=>{
+                      const {nome, sigla}  = state;
+                      return(<option key={index} value={sigla}>{nome}</option>)
+                    })}
+                  </select>
                 </State>
               </WrapperCityandState>
             </AddressBox>
@@ -154,7 +244,7 @@ function FinishContract() {
             </WrapperCardData>
           </WrapperPaymentForm>
           <WrapperContractButton>
-              <Button>Finalizar e contratar</Button>
+              <Button onClick={()=>navigate('/thanks')}>Finalizar e contratar</Button>
           </WrapperContractButton>
         </Container>
     );

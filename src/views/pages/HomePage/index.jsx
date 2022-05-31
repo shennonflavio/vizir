@@ -41,8 +41,9 @@ function HomePage() {
     }
   };
 
-
   window.addEventListener('scroll', toggleVisible);
+
+
 
 
   return (
@@ -60,7 +61,7 @@ function HomePage() {
     <Plans scrollCalc={scrollCalc}/>
     </div>
     <Footer/>
-    <ButtonToTop visible={visible ? 'flex' : 'none'}  onClick={()=>scrollToTop()}>
+    <ButtonToTop view={visible ? 'flex' : 'none'}  onClick={()=>scrollToTop()}>
       <img src={toTopIcon} alt="Botao voltar" />
     </ButtonToTop>
     </WrapperHomePage>
