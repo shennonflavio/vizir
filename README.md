@@ -1,7 +1,7 @@
 <h1 align="center">Projeto telzir</h1>
 
 <h5 align="center">
-    <a href="https://vizir-lyart.vercel.app/">🔗 Link para o site</a>
+    <a href="https://vizir-lyart.vercel.app/">🔗 Link para o site hospedado na vercel</a>
 </h5>
 <p align="center"> Site modelo para empresa de telefonia celular</p>
 
