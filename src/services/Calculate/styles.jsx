@@ -7,6 +7,14 @@ export const Container = styled.div`
   align-items: center;
   gap: 12px;
   justify-content: space-between;
+
+  @media (max-width: 600px) {
+    height: fit-content;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
 `;
 
 export const PricePlan = styled.div`

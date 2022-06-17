@@ -225,6 +225,12 @@ export const Total = styled.div`
     b{
       font-size: 14px;
     }
+
+    @media (max-width: 600px){
+      height: fit-content;
+      flex-direction: column;
+      gap: 12px;
+    }
 `;
 
 export const Dropdown = styled.ul`
