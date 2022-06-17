@@ -35,7 +35,9 @@ import {
 import logTelzir from '../../../assets/icons/logTelzir.svg';
 import { fetchCitiesForStates, fetchStates } from '../../../services/getCityandStates';
 
-function FinishContract() {
+function FinishContract(catchvalues) {
+
+  console.log(catchvalues)
 
   const navigate = useNavigate();
 

@@ -222,7 +222,6 @@ export const Total = styled.div`
   justify-content: space-between;
   padding: 16px  24px;
 
-
     b{
       font-size: 14px;
     }
@@ -248,6 +247,7 @@ export const Dropdown = styled.ul`
   @media (max-width: 600px){
     width: calc(100% + 46px);
     border: 1px solid #e2e2e2;
+
   }
 `;
 

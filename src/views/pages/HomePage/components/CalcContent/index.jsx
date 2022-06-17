@@ -1,7 +1,8 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { arrowDownIcon } from '../../../../../assets';
-import calc from '../../../../../services/calc';
+import Calculate from '../../../../../services/Calculate';
 
 import {
   Calc,
@@ -27,7 +28,6 @@ import {
   PlanOptionSelected,
   WrapperContractButton,
   ButtonContract,
-  // WrapperTotal,
 } from './styles';
 
 function CalcContent() {
@@ -41,11 +41,19 @@ function CalcContent() {
   const [selectedDestinyOption, setSelectedDestinyOption] = useState();
   const [selectedTimeOption, setSelectedTimeOption] = useState();
   const [selectedPlanOption, setSelectedPlanOption] = useState();
+  const [handleCalculate, setHandleCalculate ] = useState({
+    selectedOriginOption,
+    selectedDestinyOption,
+    selectedTimeOption,
+    selectedPlanOption
+  });
 
-  function onOptionOriginClicked(value,id) {
+
+  function onOptionOriginClicked(value, id) {
     setSelectedOriginOption(value, id);
     setDropdownOrigin(false);
   }
+
   function onOptionDestinyClicked(value) {
     setSelectedDestinyOption(value);
     setDropdownDestiny(false);
@@ -60,15 +68,6 @@ function CalcContent() {
     setSelectedPlanOption(item);
   }
 
-  function handleApplyButton() {
-    calc(
-      selectedOriginOption.id,
-      selectedDestinyOption,
-      selectedTimeOption,
-      selectedPlanOption,
-    );
-    setDropdownPlan(false);
-  }
 
   const options = [
     {
@@ -76,23 +75,18 @@ function CalcContent() {
       value: '011- São Paulo ',
     },
     {
-      id: '12',
-      value: '012- Lorem Ipsum',
+      id: '16',
+      value: '016- Lorem Ipsum',
     },
     {
-      id: '13',
-      value: '013- Sit Amet',
+      id: '17',
+      value: '017- Sit Amet',
     },
     {
       id: '18',
       value: '018- Duis aute',
-    },
-    {
-      id: '21',
-      value: '021- Consequat',
-    },
+    }
   ];
-
 
   const time = [
     '20 min',
@@ -105,6 +99,21 @@ function CalcContent() {
   ];
 
   const plan = ['FaleMais 30', 'FaleMais 60', 'FaleMais 120'];
+
+  const handleCalc=()=> {
+   setHandleCalculate({
+    selectedOriginOption,
+    selectedDestinyOption,
+    selectedTimeOption,
+    selectedPlanOption
+  });
+  setSelectedOriginOption('')
+  setSelectedDestinyOption('')
+  setSelectedTimeOption('')
+    setDropdownPlan(false);
+  }
+
+
 
   return (
     <Container>
@@ -134,7 +143,12 @@ function CalcContent() {
                   {options.map((optionOrigin) => (
                     <ListItem
                       value={optionOrigin.id}
-                      onClick={() => onOptionOriginClicked(optionOrigin.value, optionOrigin.id)}
+                      onClick={() =>
+                        onOptionOriginClicked(
+                          optionOrigin.value,
+                          optionOrigin.id,
+                        )
+                      }
                       key={Math.random()}
                     >
                       {optionOrigin.value}
@@ -160,7 +174,7 @@ function CalcContent() {
                     <ListItem
                       value={optionDestiny.id}
                       onClick={() =>
-                      onOptionDestinyClicked(optionDestiny.value)
+                        onOptionDestinyClicked(optionDestiny.value)
                       }
                       key={Math.random()}
                     >
@@ -239,22 +253,22 @@ function CalcContent() {
                   ))}
                 </WrapperCheckbox>
                 <PlanButton>
-                  <Button onClick={() => handleApplyButton()}>Aplicar</Button>
+                  <Button onClick={()=>handleCalc()}>Aplicar</Button>
                 </PlanButton>
               </DropdownPlan>
             )}
           </Plan>
-          {/* <WrapperTotal> */}
 
           <Total>
             <b>Total</b>
-            <b>R$ 0,00</b>
+
+           <Calculate cacthValues={handleCalculate}/>
+
           </Total>
 
-          {selectedOriginOption &&
-            selectedDestinyOption &&
-            selectedTimeOption &&
-            selectedPlanOption && (
+          {
+          selectedPlanOption &&
+             (
               <WrapperContractButton>
                 <ButtonContract
                   onClick={() => navigate('/contract')}
@@ -263,8 +277,7 @@ function CalcContent() {
                   Contratar
                 </ButtonContract>
               </WrapperContractButton>
-            )}
-          {/* </WrapperTotal> */}
+            ) }
         </Calc>
       </WrapperCalc>
     </Container>
@@ -272,3 +285,4 @@ function CalcContent() {
 }
 
 export default CalcContent;
+
